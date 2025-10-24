@@ -18,10 +18,16 @@ let messages = [];
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
   socket.emit("chatHistory", messages);
+
   socket.on("chatMessage", (payload) => {
+    console.log("Received message:", payload);
     messages.push(payload);
     if (messages.length > 100) messages.shift();
     io.emit("chatMessage", payload);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected:", socket.id);
   });
 });
 
@@ -31,11 +37,4 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
-io.on('connection', (socket) => {
-  console.log('New client connected');
-  socket.on('chatMessage', (msg) => {
-    console.log('Received message:', msg);
-    io.emit('chatMessage', msg);
-  });
-});
 
