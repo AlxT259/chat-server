@@ -31,3 +31,11 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+io.on('connection', (socket) => {
+  console.log('New client connected');
+  socket.on('chatMessage', (msg) => {
+    console.log('Received message:', msg);
+    io.emit('chatMessage', msg);
+  });
+});
+
