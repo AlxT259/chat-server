@@ -7,9 +7,9 @@ import mongoose from "mongoose";
 const app = express();
 app.use(cors());
 
-const mongoURI = 'mongodb+srv://alxt259:alx2593012@chat-cluster.1cs5zah.mongodb.net/chatdb?retryWrites=true&w=majority';
+const mongoURI = 'mongodb+srv://alxt259:alx2593012@chat-cluster.1cs5zah.mongodb.net/chatDB?retryWrites=true&w=majority';
 
-mongoose.connect(mongoURI)
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
